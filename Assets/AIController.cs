@@ -11,20 +11,21 @@ public class AIController : MonoBehaviour
 
     private Animator anim;
 
-    public float attackingDistance;
+    public float attackingDistance=10f;
     public float walkingDistance;
     public float alertDistance;
     public float speed;
     public float attackAngle;
 
-    private NavMeshAgent agent;
+    public NavMeshAgent agent;
 
     public List<GameObject> WayPoints;
     public float remainingDistance;
     private int selectedDestination;
     public int maxTime;
     public int minTime;
-    bool attacked = false;
+
+    public bool attacked = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -43,26 +44,46 @@ public class AIController : MonoBehaviour
         //Debug.Log(Ed);
         //SetPosition();
 
-        if(agent.enabled == true && agent.remainingDistance < remainingDistance)
+        /*if(agent.enabled == true && agent.remainingDistance < remainingDistance)
         {
             agent.enabled = true;
             anim.SetInteger("speed", 0);
             anim.SetBool("isWalking", false);
            // StartCoroutine(RandomMovementtoWayPoint());
             //Debug.Log("Arrived ...");
-        }
+        }*/
 
         //Debug.Log(Vector3.Distance(transform.position, player.transform.position));
-        if(Vector3.Distance(transform.position, player.transform.position) < alertDistance)
+        /*if(Vector3.Distance(transform.position, player.transform.position) < alertDistance)
         {
-            agent.enabled = false;
+            if (Vector3.Distance(transform.position, player.transform.position) <= agent.stoppingDistance)
+            {
+                FaceTarget();
+                anim.SetBool("isProning", true);
+                anim.SetInteger("speed", 1);
+            }
+            //agent.enabled = false;
            // Dodge();
-        }
+        }*/
 
-        else if(Vector3.Distance(transform.position, player.transform.position) <= attackingDistance)// && Vector3.Distance(transform.position, player.transform.position) >= alertDistance)
+        if(Vector3.Distance(transform.position, player.transform.position) <= attackingDistance)// && Vector3.Distance(transform.position, player.transform.position) >= alertDistance)
         {
+            //Debug.Log("In Red Circle "+ Vector3.Distance(transform.position, player.transform.position));
+            agent.enabled = true;
+            agent.SetDestination(player.transform.position);
+            FaceTarget();
+            if (Vector3.Distance(transform.position, player.transform.position) <= 1.7f)//stoppingDistance)
+            {
+                //Debug.Log("Less Than Rem Dist : "+ Vector3.Distance(transform.position, player.transform.position));
+                FaceTarget();
+                anim.SetBool("isWalking", false);
+                anim.SetBool("GrabLegs", false);
+                anim.SetBool("isProning", true);
+                anim.SetInteger("speed", 1);
+                anim.Play("Prone Idle");
+            }
             //Debug.Log("Attacking");
-            agent.enabled = false;
+            //agent.enabled = false;
             //Vector3 targetDir = player.transform.position - transform.position;
             //float angle = Vector3.Angle(targetDir, transform.forward);
             //Debug.Log(angle);
@@ -76,6 +97,7 @@ public class AIController : MonoBehaviour
         // Idle
         else if(Vector3.Distance(transform.position, player.transform.position) > attackingDistance)
         {
+            //Debug.Log("Outside circle " + Vector3.Distance(transform.position, player.transform.position));
             anim.SetInteger("speed", 0);
             anim.SetBool("isWalking", false);
             anim.SetBool("GrabLegs", false);
@@ -105,6 +127,17 @@ public class AIController : MonoBehaviour
         }
     }
 
+    public void Idle()
+    {
+        anim.SetInteger("speed", 0);
+        anim.SetBool("isWalking", false);
+        anim.SetBool("GrabLegs", false);
+        anim.SetBool("isWalkingBack", false);
+        anim.SetBool("isAttacking", false);
+        anim.SetBool("isDodging", false);
+        anim.SetBool("isProning", false);
+    }
+
     void Move()
     {
         //Debug.Log(player.transform.position);
@@ -123,6 +156,7 @@ public class AIController : MonoBehaviour
     IEnumerator DodgeRoutine()
     {
         anim.SetBool("isWalking", false);
+        anim.SetBool("isProning", false);
         anim.SetBool("isDodging", true);
         anim.SetInteger("speed", 1);
         yield return new WaitForSeconds(1);
@@ -138,20 +172,32 @@ public class AIController : MonoBehaviour
     IEnumerator AttackRoutine()
     {
         // Escape function
-        
+        //agent.enabled = false;
         anim.SetBool("isWalking", false);
+        anim.SetBool("isProning", false);
         anim.SetBool("GrabLegs", true);
         anim.SetInteger("speed", 1);
-        yield return new WaitForSeconds(2);
-        
+        yield return new WaitForSeconds(3);
+
         // Surely dying 
         if (Vector3.Distance(transform.position, player.transform.position) < 1f)
         {
             attacked = true;
-            PlayerDying();
+            anim.SetBool("isWalking", false);
+            anim.SetBool("GrabLegs", false);
+            anim.SetBool("isProning", true);
+            //anim.SetBool("AttackedIdle", true);
+            //anim.SetBool("AttackedMove", true);
+            //PlayerDying();
+        }
+        else
+        {
+            anim.SetBool("isProning", false);
+            attacked = false;
         }
         anim.SetBool("GrabLegs", false);
         anim.SetInteger("speed", 0);
+        
     }
 
     void PlayerDying()
@@ -212,5 +258,21 @@ public class AIController : MonoBehaviour
                 anim.SetBool("isDodging", false);
                 break;
         }
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, attackingDistance);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position,alertDistance);
+    }
+
+    void FaceTarget()
+    {
+        Vector3 direction = (player.transform.position - transform.position).normalized;
+        Quaternion lookRotation = Quaternion.LookRotation(new Vector3(direction.x,0,direction.z));
+        transform.rotation = Quaternion.Slerp(transform.rotation,lookRotation,Time.deltaTime*5f);
     }
 }

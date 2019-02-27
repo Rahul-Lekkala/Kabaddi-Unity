@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AttackAnim : MonoBehaviour
 {
@@ -17,12 +18,21 @@ public class AttackAnim : MonoBehaviour
 
     CharacterController controller;
     Animator anim;
+    AIController aIController;
+
+    public NavMeshAgent agent;
+    public GameObject LosePosition;
+
+    public GameObject Opponent;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
-        //isDead = false;
+        aIController = new AIController();
+        agent = GetComponent<NavMeshAgent>();
+        agent.enabled = false;
+        isDead = false;
     }
 
     void Update()
@@ -30,14 +40,34 @@ public class AttackAnim : MonoBehaviour
         CrossBorder();
         Movement();
         GetInput();
-        SetDead();
-        //isDead = false;
-        
+        if (isDead == true)
+        {
+            Dead();
+        }
     }
 
-    public bool getIsDead()
+    void Dead()
     {
-        return isDead;
+        //BasicAI bi = new BasicAI();
+        //bi.Won();
+        Debug.Log("Dead...");
+        agent.enabled = true;
+        agent.SetDestination(LosePosition.transform.position);
+        anim.SetBool("isLost",true);
+        anim.SetBool("AttackedMove", false);
+        anim.SetBool("AttackedIdle", false);
+        anim.SetBool("isAttacked", true);
+        //SwitchCharacter sc = new SwitchCharacter();
+        //sc.Lose();
+
+        Opponent.GetComponent<BasicAI>().enabled = false;
+      
+        agent.enabled = true;
+        agent.SetDestination(LosePosition.transform.position);
+        if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)
+        {
+            transform.gameObject.active = false;
+        }
     }
 
     void CrossBorder()
@@ -55,8 +85,10 @@ public class AttackAnim : MonoBehaviour
     }
     void Movement()
     {
+        agent.enabled = true;
+        agent.SetDestination(LosePosition.transform.position);
         value = transform.position.z;
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         //Debug.Log("Movement called");
         if (controller.isGrounded)
         {
@@ -74,9 +106,18 @@ public class AttackAnim : MonoBehaviour
                 {
                     return;
                 }
-                else if (anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalkingBack") == false)
+                else if (anim.GetBool("isAttacked") == false && anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalkingBack") == false)
                 {
                     anim.SetBool("isWalking", true);
+                    anim.SetInteger("speed", 1);
+
+                    moveDir = new Vector3(0, 0, 1);
+                    moveDir = moveDir * speed;
+                    moveDir = transform.TransformDirection(moveDir);
+                }
+                else if (anim.GetBool("isAttacked") == true && anim.GetBool("isLost") == false && anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalkingBack") == false)
+                {
+                    anim.SetBool("AttackedMove", true);
                     anim.SetInteger("speed", 1);
 
                     moveDir = new Vector3(0, 0, 1);
@@ -89,6 +130,12 @@ public class AttackAnim : MonoBehaviour
                 anim.SetBool("isWalking", false);
                 anim.SetInteger("speed", 0);
                 moveDir = new Vector3(0, 0, 0);
+                if (BasicAI.attacked == true)
+                {
+                    anim.SetBool("AttackedMove", false);
+                    anim.SetBool("AttackedIdle", true);
+                    anim.SetInteger("speed", 1);
+                }
             }
 
             if (Input.GetKey(KeyCode.S))
@@ -105,12 +152,21 @@ public class AttackAnim : MonoBehaviour
                 {
                     return;
                 }
-                else if (anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalking") == false)
+                else if (anim.GetBool("isAttacked") == false && anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalking") == false)
                 {
                     anim.SetBool("isWalkingBack", true);
                     anim.SetInteger("speed", 1);
 
                     moveDir = new Vector3(0, 0, -1);
+                    moveDir = moveDir * speed;
+                    moveDir = transform.TransformDirection(moveDir);
+                }
+                else if (anim.GetBool("isAttacked") == true && anim.GetBool("isLost") == false && anim.GetBool("isAttacking") == false && anim.GetBool("isDodging") == false && anim.GetBool("isWalkingBack") == false)
+                {
+                    anim.SetBool("AttackedMove", true);
+                    anim.SetInteger("speed", 1);
+
+                    moveDir = new Vector3(0, 0, 1);
                     moveDir = moveDir * speed;
                     moveDir = transform.TransformDirection(moveDir);
                 }
@@ -120,6 +176,28 @@ public class AttackAnim : MonoBehaviour
                 anim.SetBool("isWalkingBack", false);
                 anim.SetInteger("speed", 0);
                 moveDir = new Vector3(0, 0, 0);
+                if(BasicAI.attacked == true)
+                {
+                    anim.SetBool("AttackedMove", false);
+                    anim.SetBool("AttackedIdle", true);
+                    anim.SetInteger("speed", 1);
+                }
+            }
+            if(BasicAI.attacked==true)
+            {
+                // Debug.Log("Attacked is working...");
+                if (anim.GetBool("isLost") == false)
+                {
+                    Attacked();
+                }
+            }
+            if (BasicAI.attacked == false)
+            {
+               // Debug.Log("... Not Attacking");
+                //anim.SetInteger("speed", 0);
+                anim.SetBool("isAttacked", false);
+                anim.SetBool("AttackedIdle", false);
+                anim.SetBool("AttackedMove", false);
             }
         }
         rot += Input.GetAxis("Horizontal") * rotSpeed * Time.deltaTime;
@@ -166,6 +244,22 @@ public class AttackAnim : MonoBehaviour
         }
     }
 
+    void Attacked()
+    {
+        StartCoroutine(AttackedRoutine());
+    }
+
+    IEnumerator AttackedRoutine()
+    {
+        anim.SetBool("isAttacked", true);
+        anim.SetBool("AttackedIdle",true);
+        anim.SetInteger("speed", 1);
+        yield return new WaitForSeconds(2);
+        anim.SetBool("AttackedIdle", false);
+        anim.SetBool("AttackedMove", true);
+        //anim.SetInteger("speed", 0);
+    }
+
     void Attacking()
     {
         StartCoroutine(AttackRoutine());
@@ -194,11 +288,25 @@ public class AttackAnim : MonoBehaviour
         anim.SetInteger("speed", 0);
     }
 
-    void SetDead()
+    public void SetDead()
     {
-        if(Input.GetKeyDown(KeyCode.LeftAlt))
+        isDead = true;
+        return;
+        Debug.Log("Dead...");
+        anim.SetBool("isLost", true);
+        anim.SetBool("AttackedMove", false);
+        anim.SetBool("AttackedIdle", false);
+        anim.SetBool("isAttacked", true);
+        //SwitchCharacter sc = new SwitchCharacter();
+        //sc.Lose();
+
+        Opponent.GetComponent<BasicAI>().enabled = false;
+
+        agent.enabled = true;
+        agent.SetDestination(LosePosition.transform.position);
+        if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)
         {
-            isDead = true;
+            transform.gameObject.active = false;
         }
     }
 }

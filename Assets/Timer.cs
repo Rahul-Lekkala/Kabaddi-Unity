@@ -8,7 +8,7 @@ public class Timer : MonoBehaviour
 {
 
     //private int timer = 30;
-    public CharacterController player;
+    //public CharacterController player;
     public Text timerValue;
     public float timeLeft = 30;
     float rightBorderLimit = 2.4f;
@@ -30,7 +30,7 @@ public class Timer : MonoBehaviour
         //Debug.Log("----------------" + playerController.value.z);
         AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
-        Debug.Log("AttackAnim.value"+ AttackAnim.value);
+        //Debug.Log("AttackAnim.value"+ AttackAnim.value);
         if (AttackAnim.value >= rightBorderLimit)
         {
             timeLeft = (timeLeft - Time.deltaTime);
@@ -39,7 +39,7 @@ public class Timer : MonoBehaviour
             UpdateLevelTimer(timeLeft);
             if (timeLeft <= 0.0f)
             {
-                Debug.Log("Danger Zone :");
+                //Debug.Log("Danger Zone :");
                 Screen.sleepTimeout = SleepTimeout.NeverSleep;
             }
 

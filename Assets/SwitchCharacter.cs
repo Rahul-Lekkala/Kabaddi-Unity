@@ -7,6 +7,7 @@ public class SwitchCharacter : MonoBehaviour
     public GameObject[] characters;
     public GameObject currentCharacter;
     static int characterIndex;
+    public GameObject LosePosition;
 
     // Start is called before the first frame update
     void Start()
@@ -32,19 +33,19 @@ public class SwitchCharacter : MonoBehaviour
             characters[characterIndex].GetComponent<AttackAnim>().enabled = true;
             currentCharacter = characters[characterIndex];
         }
-
-        
-        
-        //Debug.Log(an.getIsDead());
-
-        if (an.getIsDead().Equals(true))
-        {
-            currentCharacter.SetActive(false);   
-        }
     }
 
     public int character()
     {
         return characterIndex;
     }
+
+    /*public void Lose()
+    {
+        currentCharacter.GetComponent<AttackAnim>().agent.SetDestination(LosePosition.transform.position);
+        if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)
+        {
+            currentCharacter.gameObject.active = false;
+        }
+    }*/
 }
