@@ -6,44 +6,61 @@ using System;
 
 public class Timer : MonoBehaviour
 {
-
-    //private int timer = 30;
-    //public CharacterController player;
     public Text timerValue;
     public float timeLeft = 30;
     float rightBorderLimit = 2.4f;
+    public Text TeamAScore;
+    public Text TeamBScore;
+    public int TeamAScoreValue;
+    public int TeamBScoreValue;
+    bool flag = true;
+    bool inAction = false;
 
-    //public GameObject[] characters;
-    //GameObject currentCharacter;
-    //int characterIndex;
+    public GameObject[] defenders;
+    GameObject defender;
 
-    // Update is called once per frame
     void Update()
     {
-        //SwitchCharacter sc = new SwitchCharacter();
-        //int i = sc.character();
-        //currentCharacter = characters[i];
-
-        //player = currentCharacter.GetComponent<CharacterController>();
-
-        //Debug.Log("*******" + playerController.value);
-        //Debug.Log("----------------" + playerController.value.z);
         AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
-        //Debug.Log("AttackAnim.value"+ AttackAnim.value);
+
         if (AttackAnim.value >= rightBorderLimit)
         {
+            inAction = true;
             timeLeft = (timeLeft - Time.deltaTime);
-            //yield return new WaitForSeconds(1.0f);
-            timerValue.text = timeLeft.ToString();
+            timerValue.text = ((int)timeLeft).ToString();
             UpdateLevelTimer(timeLeft);
-            if (timeLeft <= 0.0f)
+            if (timeLeft <= 0.0f || BasicAI.won)
             {
-                //Debug.Log("Danger Zone :");
-                Screen.sleepTimeout = SleepTimeout.NeverSleep;
+                if (flag)
+                {
+                    TeamAScoreValue += 1;
+                    TeamAScore.text = TeamAScoreValue.ToString();
+                    flag = false;
+                    //Screen.sleepTimeout = SleepTimeout.NeverSleep;
+                }
             }
 
         }
+        Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
+        if (inAction)
+        {
+            if (AttackAnim.value <= rightBorderLimit)
+            {
+                //BasicAI bi = new BasicAI();
+                //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
+                int score = KillDefenders();
+                TeamBScoreValue += score;
+                TeamBScore.text = TeamBScoreValue.ToString();
+                inAction = false;
+                
+            }
+        }
+        //if (basicai.won)
+        //{
+        //    teamascorevalue += 1;
+        //    teamascore.text = teamascorevalue.tostring();
+        //}
     }
     public void UpdateLevelTimer(float totalSeconds)
     {
@@ -57,5 +74,19 @@ public class Timer : MonoBehaviour
             seconds = 0;
             minutes += 1;
         }
+    }
+
+    int KillDefenders()
+    {
+        int score = 0 ;
+        for (int j = 0; j < defenders.Length; j++)
+        {
+            if(defenders[j].GetComponent<AIController>().isAlive)
+            {
+                defenders[j].gameObject.active = false;
+                score++;
+            }
+        }
+        return score;
     }
 }

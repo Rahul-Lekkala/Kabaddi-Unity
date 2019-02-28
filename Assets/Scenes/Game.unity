@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -165,7 +165,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 13213412}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -329,6 +329,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!143 &25288611
 CharacterController:
   m_ObjectHideFlags: 0
@@ -460,7 +461,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51246386}
   m_LocalRotation: {x: -0.11802758, y: 0.09131812, z: -0.010900802, w: -0.9887425}
-  m_LocalPosition: {x: -1.7338843, y: 4.994947, z: -7.9784184}
+  m_LocalPosition: {x: -0.5, y: 4.994947, z: -7.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -485,7 +486,7 @@ MonoBehaviour:
   - {fileID: 454403351}
   - {fileID: 2135347089}
   - {fileID: 1631950880}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 1.11, y: 0, z: 0}
 --- !u!114 &51246391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -567,6 +568,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!143 &127200505
 CharacterController:
   m_ObjectHideFlags: 0
@@ -638,6 +640,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 248596428}
   Opponent: {fileID: 829590398}
@@ -890,7 +894,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 248596428}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1170,7 +1174,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 326233888}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1301,7 +1305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.3128269
+      value: 4.36
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1402,7 +1406,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355373817}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1664,6 +1668,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 0}
   Opponent: {fileID: 0}
@@ -1855,6 +1861,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!143 &487014884
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2040,7 +2047,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534424523}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2091,7 +2098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.7071733
+      value: -2.43
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2137,6 +2144,14 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 685616070d298a64fb3974cb37c95041, type: 2}
+    - target: {fileID: 400150, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -6.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 400150, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
 --- !u!1 &654102279
@@ -2192,7 +2207,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654102279}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2447,7 +2462,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 764301616}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2538,7 +2553,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 786715889}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2640,7 +2655,7 @@ MonoBehaviour:
   - {fileID: 1440117003}
   - {fileID: 487014881}
   attackingDistance: 5.51
-  walkingDistance: 0
+  distance: 1.6
   alertDistance: 0
   speed: 0
   attackAngle: 0
@@ -2648,6 +2663,13 @@ MonoBehaviour:
   remainingDistance: 0
   maxTime: 0
   minTime: 0
+  playersDied:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
 --- !u!1 &849471880
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,7 +2723,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849471880}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2828,7 +2850,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1020871762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3186,6 +3208,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!143 &1055533662
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3348,6 +3371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 0}
   Opponent: {fileID: 0}
@@ -3431,6 +3456,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 0}
   Opponent: {fileID: 0}
@@ -3547,6 +3574,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerValue: {fileID: 427781825}
   timeLeft: 30
+  TeamAScore: {fileID: 1614211429}
+  TeamBScore: {fileID: 1338143780}
+  TeamAScoreValue: 0
+  TeamBScoreValue: 0
+  defenders:
+  - {fileID: 1913148336}
+  - {fileID: 127200502}
+  - {fileID: 25288608}
+  - {fileID: 1055533659}
+  - {fileID: 1440117003}
+  - {fileID: 487014881}
 --- !u!1 &1215523044
 GameObject:
   m_ObjectHideFlags: 0
@@ -3600,7 +3638,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215523044}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3691,7 +3729,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1268555093}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3895,7 +3933,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297706628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -3986,7 +4024,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1321096846}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4221,7 +4259,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1395031805}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4286,7 +4324,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.6271732
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4460,6 +4498,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!143 &1440117006
 CharacterController:
   m_ObjectHideFlags: 0
@@ -4680,7 +4719,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523985216}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -4944,6 +4983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 0}
   Opponent: {fileID: 0}
@@ -5212,7 +5253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.6271734
+      value: 2.28
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5439,6 +5480,7 @@ MonoBehaviour:
   maxTime: 10
   minTime: 5
   attacked: 0
+  isAlive: 0
 --- !u!65 &1913148338
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5567,7 +5609,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1924052230}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5848,7 +5890,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1950880133}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5939,7 +5981,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1965252062}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -6031,6 +6073,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
   agent: {fileID: 0}
   LosePosition: {fileID: 0}
   Opponent: {fileID: 0}

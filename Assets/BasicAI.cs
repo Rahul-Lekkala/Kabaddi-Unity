@@ -13,25 +13,25 @@ public class BasicAI : MonoBehaviour
     private Animator anim;
 
     public float attackingDistance = 10f;
-    public float walkingDistance;
+    public float distance;
     public float alertDistance;
     public float speed;
     public float attackAngle;
-
-    //private UnityEngine.AI.NavMeshAgent agent;
-
     public List<GameObject> WayPoints;
     public float remainingDistance;
     private int selectedDestination;
     public int maxTime;
     public int minTime;
-
     public static bool attacked = false;
-    bool won = false;
+    public static bool won;
+    public static int score;
+    public static string playerName;
+    public string [] playersDied;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
+        won = false;
         //agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         //agent.enabled = false;
     }
@@ -42,71 +42,65 @@ public class BasicAI : MonoBehaviour
         SwitchCharacter sc = new SwitchCharacter();
         int i = sc.character();
         player = characters[i];
-        int numberOfPlayersAttacking = 0;
         int numberOfPlayersNotAttacking = 0;
-
-        for (int j = 0; j < defenders.Length && !won ; j++)
+        if (!won)
         {
-            defender = defenders[j];
-            float Ed = Vector3.Distance(defenders[j].transform.position, player.transform.position);
-            //Debug.Log(j + " Dist " + Ed);
-            defender.GetComponent<AIController>().enabled = true;
-            //if(defender.GetComponent<AIController>().attacked==true)
-            if(Ed<2f)
+            int numberOfPlayersAttacking = 0;
+            for (int j = 0; j < defenders.Length; j++)
             {
+                defender = defenders[j];
+                float Ed = Vector3.Distance(defenders[j].transform.position, player.transform.position);
+                //Debug.Log(j + " Dist " + Ed);
+                defender.GetComponent<AIController>().enabled = true;
 
-                attacked = true;
-                numberOfPlayersAttacking++;
-/*
-                if (Ed < attackingDistance)
+                if (Vector3.Distance(defenders[j].transform.position, player.transform.position) < distance)
                 {
+                    defenders[j].GetComponent<AIController>().isAlive = false;
+                    Debug.Log(defenders[j].GetComponent<AIController>().isAlive);
+                    attacked = true;
                     numberOfPlayersAttacking++;
+                    AttackedPlayers(numberOfPlayersAttacking);
                 }
-  */          }
-            if(attacked==true && defender.GetComponent<AIController>().agent == true)
-            {
-                defender.GetComponent<AIController>().agent.SetDestination(player.transform.position);
-            }
-           //if(numberOfPlayersAttacking==defenders.Length)
-         //  {
-            //    numberOfPlayersAttacking = 0;
-           // }
-            if(Ed>attackingDistance)
-            {
-                numberOfPlayersNotAttacking++;
-            }
-            if(numberOfPlayersNotAttacking==defenders.Length)
-            {
-                numberOfPlayersNotAttacking = 0;
-                attacked = false;
-            }
-            if(attacked==true && numberOfPlayersAttacking>=3)
-            {
-                for (int k = 0; k < defenders.Length; k++)
+                if (attacked == true && defender.GetComponent<AIController>().agent == true)
                 {
-                    defenders[k].GetComponent<AIController>().Idle();
-                    defenders[k].GetComponent<AIController>().StopAllCoroutines();
-                    defenders[k].GetComponent<AIController>().enabled = false;
+                    defender.GetComponent<AIController>().agent.SetDestination(player.transform.position);
                 }
-                player.GetComponent<AttackAnim>().SetDead();
-                //defender.GetComponent<AIController>().enabled = false;
-                //return;
-                won = true;
+                
+                if (Ed > attackingDistance && attacked)
+                {
+                    numberOfPlayersNotAttacking++;
+                }
+                if (numberOfPlayersNotAttacking == defenders.Length)
+                {
+                    numberOfPlayersNotAttacking = 0;
+                    attacked = false;
+                }
+                if (attacked == true && numberOfPlayersAttacking >= 3)
+                {
+                    for (int k = 0; k < defenders.Length; k++)
+                    {
+                        defenders[k].GetComponent<AIController>().Idle();
+                        defenders[k].GetComponent<AIController>().StopAllCoroutines();
+                        defenders[k].GetComponent<AIController>().enabled = false;
+                        playersDied[k] = defenders[k].name;
+                        Debug.Log("Players died is :" + playersDied[k]);
+                    }
+                    player.GetComponent<AttackAnim>().SetDead();
+                    won = true;
+
+                    //AttackedPlayers(numberOfPlayersAttacking);
+                }
             }
-            Debug.Log("numberOfPlayersAttacking = "+numberOfPlayersAttacking);
-            Debug.Log("distance "+ Ed);
         }
-        
+        //Debug.Log("numberOfPlayersAttacking = " + numberOfPlayersAttacking);
     }
     
-    public void Won()
+    public void AttackedPlayers(int x)
     {
-        GameObject defender;
-        //global defenders;
-        for (int j = 0; j < defenders.Length; j++)
+        if (x > score)
         {
-            defender = defenders[j];
-            defender.GetComponent<AIController>().enabled = false;
+            score = x;
         }
+        //Debug.Log("The score of team is :" + score);
     }
 }

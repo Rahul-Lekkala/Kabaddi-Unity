@@ -5,12 +5,16 @@ using UnityEngine.AI;
 
 public class AttackAnim : MonoBehaviour
 {
+    public GameObject[] defenders;
+    GameObject defender;
+
     float speed = 2;
     float rotSpeed = 50;
     float rot = 0f;
     float gravity = 8;
     static bool isDead;
     public static float value;
+    public float distance;
 
     //TODO:: If player crosses the line, disable SwitchCharacter
 
@@ -43,7 +47,25 @@ public class AttackAnim : MonoBehaviour
         if (isDead == true)
         {
             Dead();
+            //RemovingPlayers();
         }
+        
+    }
+
+    void RemovingPlayers()
+    {
+        //int numberOfPlayersAttacking = 0;
+        //for (int j = 0; j < defenders.Length; j++)
+        //{
+        //    defender = defenders[j];
+        //    float Ed = Vector3.Distance(defenders[j].transform.position, transform.position);
+        //    //Debug.Log(j + " Dist " + Ed);
+        //    //if(defender.GetComponent<AIController>().attacked==true)
+        //    if (Ed < distance)
+        //    {
+        //        numberOfPlayersAttacking++;
+        //    }
+        //}
     }
 
     void Dead()
@@ -60,14 +82,16 @@ public class AttackAnim : MonoBehaviour
         //SwitchCharacter sc = new SwitchCharacter();
         //sc.Lose();
 
-        Opponent.GetComponent<BasicAI>().enabled = false;
-      
+        Opponent.GetComponent<BasicAI>().enabled = false; 
         agent.enabled = true;
         agent.SetDestination(LosePosition.transform.position);
         if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)
         {
-            transform.gameObject.active = false;
+            //transform.gameObject.active = false;
         }
+
+        transform.gameObject.active = false;
+
     }
 
     void CrossBorder()
@@ -292,21 +316,5 @@ public class AttackAnim : MonoBehaviour
     {
         isDead = true;
         return;
-        Debug.Log("Dead...");
-        anim.SetBool("isLost", true);
-        anim.SetBool("AttackedMove", false);
-        anim.SetBool("AttackedIdle", false);
-        anim.SetBool("isAttacked", true);
-        //SwitchCharacter sc = new SwitchCharacter();
-        //sc.Lose();
-
-        Opponent.GetComponent<BasicAI>().enabled = false;
-
-        agent.enabled = true;
-        agent.SetDestination(LosePosition.transform.position);
-        if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)
-        {
-            transform.gameObject.active = false;
-        }
     }
 }

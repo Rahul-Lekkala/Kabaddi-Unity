@@ -26,12 +26,14 @@ public class AIController : MonoBehaviour
     public int minTime;
 
     public bool attacked = false;
+    public bool isAlive;
     // Start is called before the first frame update
     void Start()
     {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
+        isAlive = true;
     }
 
     // Update is called once per frame
@@ -267,6 +269,9 @@ public class AIController : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position,alertDistance);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, walkingDistance);
     }
 
     void FaceTarget()
