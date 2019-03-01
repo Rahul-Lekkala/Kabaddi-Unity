@@ -38,29 +38,16 @@ public class AIController : MonoBehaviour
     void Awake()
     {
         startPosition = transform.position;
-        startPositionList.Add(startPosition);
+        
         Debug.Log("The starting position of the players" + startPosition);
     }
 
-    void ChangePosition()
+    public void ChangePosition()
     {
-        if (Input.GetKey(KeyCode.K))
-        {
-            transform.position = startPosition;
-            Debug.Log(transform.position);
-            Debug.Log("K Key Pressed . . . ");
+        controller.enabled = false;
+        controller.transform.position = new Vector3(startPosition.x, startPosition.y, startPosition.z);
+        controller.enabled = true;
 
-            moveDir = transform.position;
-            moveDir = moveDir * speed;
-            moveDir = transform.TransformDirection(moveDir);
-            controller.Move(moveDir * Time.deltaTime);
-
-            foreach (var playerPosition in startPositionList)
-            {
-                transform.position = playerPosition;// LosePosition.transform.position;
-                Debug.Log("After 30 Seconds" + playerPosition);
-            }
-        }
     }
 
     void Start()

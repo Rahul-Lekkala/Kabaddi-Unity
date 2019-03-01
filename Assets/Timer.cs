@@ -8,6 +8,10 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public GameObject[] characters;
+    GameObject player;
+    public GameObject Opponent;
+
     public Text timerValue;
     public float gameTimeLeft = 50.0f;
     public float timeLeft = 30;
@@ -21,13 +25,22 @@ public class Timer : MonoBehaviour
     bool gameTime = true;
     public GameObject[] defenders;
     GameObject defender;
-
     public GameObject GameoverUI;
     public TextMeshProUGUI WinnerTeam;
     public TextMeshProUGUI Result;
+    public Texture3D texture;
 
-    void Update()
+    public Material[] material;
+    Renderer rend;
+
+    private void Start()
     {
+        
+        //rend.enabled = true;
+        //rend.sharedMaterial = material[0];
+    }
+    void Update()
+    { 
         GameTimeLeft();
         AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
@@ -47,7 +60,9 @@ public class Timer : MonoBehaviour
                     flag = false;
                     //Screen.sleepTimeout = SleepTimeout.NeverSleep;
                 }
+                //SwitchTeam();
             }
+            
         }
         //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
         if (inAction)
@@ -60,7 +75,7 @@ public class Timer : MonoBehaviour
                 TeamBScoreValue += score;
                 TeamBScore.text = TeamBScoreValue.ToString();
                 inAction = false;
-                
+                SwitchTeam();
             }
         }
         //if (basicai.won)
@@ -68,6 +83,31 @@ public class Timer : MonoBehaviour
         //    teamascorevalue += 1;
         //    teamascore.text = teamascorevalue.tostring();
         //}
+    }
+    public void SwitchTeam()
+    {
+        for (int j = 0; j < defenders.Length; j++)
+        {
+            Opponent.GetComponent<BasicAI>().enabled = false;
+            defenders[j].GetComponent<AIController>().enabled = false;
+
+            defenders[j].GetComponent<AttackAnim>().enabled = true;
+        }
+        AIController ai = new AIController();
+        ai.ChangePosition();
+
+        SwitchCharacter sc = new SwitchCharacter();
+        int i = sc.character();
+        player = characters[i];
+        Debug.Log("The player is :" + player.name);
+        AttackAnim an = new AttackAnim();
+        an.ChangePosition();
+        player.GetComponent<AttackAnim>().enabled = false;
+        player.GetComponent<AIController>().enabled = true;
+        
+        //GameObject varGameObject = GameObject.Find("object"); 
+        //GameObject varGameObject = GameObject.FindWithTag("Player"); 
+        //varGameObject.GetComponent<scriptname>().enabled = true;
     }
     public void GameTimeLeft()
     {

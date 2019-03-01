@@ -1635,6 +1635,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &135840635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135840627}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a570169ba2d6734cb9d022ac9ef1ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []
+  attackingDistance: 10
+  walkingDistance: 0
+  alertDistance: 0
+  speed: 0
+  attackAngle: 0
+  agent: {fileID: 0}
+  WayPoints: []
+  remainingDistance: 0
+  maxTime: 0
+  minTime: 0
+  attacked: 0
+  isAlive: 0
+  startPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &154232999
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3511,7 +3537,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -3947,6 +3973,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PakistanPlayer (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.957173
@@ -3957,7 +3987,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5127,6 +5157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PakistanPlayer (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.43
@@ -5137,7 +5171,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -9031,10 +9065,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheerLeader2 (5)
       objectReference: {fileID: 0}
-    - target: {fileID: 400002, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.89
-      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.7
@@ -9083,6 +9113,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c62ec3e473adf074786d4e227576c555, type: 2}
+    - target: {fileID: 400002, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.89
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
 --- !u!4 &1178394223 stripped
@@ -9388,6 +9422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1213169809}
   - component: {fileID: 1213169810}
+  - component: {fileID: 1213169811}
   m_Layer: 0
   m_Name: Pakistan
   m_TagString: Untagged
@@ -9427,6 +9462,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b94192d008c90c4aa3e3d331273b328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characters:
+  - {fileID: 135840627}
+  - {fileID: 1150374502}
+  - {fileID: 1106129013}
+  - {fileID: 454403351}
+  - {fileID: 2135347089}
+  - {fileID: 1631950880}
+  Opponent: {fileID: 829590398}
   timerValue: {fileID: 427781825}
   gameTimeLeft: 50
   timeLeft: 30
@@ -9441,9 +9484,43 @@ MonoBehaviour:
   - {fileID: 1055533659}
   - {fileID: 1440117003}
   - {fileID: 487014881}
-  GameoverUI: {fileID: 0}
-  WinnerTeam: {fileID: 0}
-  Result: {fileID: 0}
+  GameoverUI: {fileID: 1071119634}
+  WinnerTeam: {fileID: 375725860}
+  Result: {fileID: 288126426}
+  texture: {fileID: 0}
+  material: []
+--- !u!114 &1213169811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1213169808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed50040535c8dc4d81d119d2217dd93, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters: []
+  defenders:
+  - {fileID: 135840627}
+  - {fileID: 1150374502}
+  - {fileID: 1106129013}
+  - {fileID: 454403351}
+  - {fileID: 2135347089}
+  - {fileID: 1631950880}
+  attackingDistance: 5.51
+  distance: 1.6
+  alertDistance: 0
+  speed: 0
+  attackAngle: 0
+  WayPoints:
+  - {fileID: 1950880133}
+  - {fileID: 355373817}
+  - {fileID: 326233888}
+  remainingDistance: 0
+  maxTime: 0
+  minTime: 0
 --- !u!1 &1215523044
 GameObject:
   m_ObjectHideFlags: 0
@@ -11169,6 +11246,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PakistanPlayer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.02
@@ -11179,7 +11260,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -13144,6 +13225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b94192d008c90c4aa3e3d331273b328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characters: []
+  Opponent: {fileID: 0}
   timerValue: {fileID: 0}
   gameTimeLeft: 50
   timeLeft: 30
@@ -13155,6 +13238,8 @@ MonoBehaviour:
   GameoverUI: {fileID: 1071119634}
   WinnerTeam: {fileID: 375725860}
   Result: {fileID: 288126426}
+  texture: {fileID: 0}
+  material: []
 --- !u!1001 &1683785197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14267,6 +14352,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PakistanPlayer (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.28
@@ -14277,7 +14366,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x
@@ -15277,6 +15366,23 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &1913148344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913148336}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c9dd62b383587478962574a1d2848c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defenders: []
+  distance: 0
+  agent: {fileID: 0}
+  LosePosition: {fileID: 0}
+  Opponent: {fileID: 0}
 --- !u!1 &1924052230
 GameObject:
   m_ObjectHideFlags: 0
@@ -15379,6 +15485,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PakistanPlayer (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 100146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.7871733
@@ -15389,7 +15499,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -4.7824135
+      value: -9.67
       objectReference: {fileID: 0}
     - target: {fileID: 400146, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalRotation.x

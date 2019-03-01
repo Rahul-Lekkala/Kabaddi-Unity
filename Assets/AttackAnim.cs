@@ -47,29 +47,17 @@ public class AttackAnim : MonoBehaviour
         Debug.Log("The starting position of the players" + startPosition);
     }
 
-    void ChangePosition()
+    public void ChangePosition()
     {
-        if (Input.GetKey(KeyCode.K))
-        {
-            // transform.position = startPosition;
-            Debug.Log("K pressed" +controller.transform.position);
-            //controller.Move(startPosition);
             controller.enabled = false;
             controller.transform.position = new Vector3(startPosition.x,startPosition.y,startPosition.z);
             controller.enabled = true;
-
-            //moveDir = transform.position;
-            //moveDir = moveDir * speed;
-            //moveDir = transform.TransformDirection(moveDir);
-
-            //moveDir.y -= gravity * Time.deltaTime;
-            //controller.Move(moveDir * Time.deltaTime);
-        }
+        
     }
 
     void Update()
     {
-        ChangePosition();
+        
         CrossBorder();
         Movement();
         GetInput();
@@ -138,8 +126,8 @@ public class AttackAnim : MonoBehaviour
     }
     void Movement()
     {
-        agent.enabled = true;
-        agent.SetDestination(LosePosition.transform.position);
+        //agent.enabled = true;
+       // agent.SetDestination(LosePosition.transform.position);
         value = transform.position.z;
         //Debug.Log(transform.position);
         //Debug.Log("Movement called");
