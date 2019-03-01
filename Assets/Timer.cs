@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
     public Text timerValue;
+    public float gameTimeLeft = 50.0f;
     public float timeLeft = 30;
     float rightBorderLimit = 2.4f;
     public Text TeamAScore;
@@ -15,12 +18,17 @@ public class Timer : MonoBehaviour
     public int TeamBScoreValue;
     bool flag = true;
     bool inAction = false;
-
+    bool gameTime = true;
     public GameObject[] defenders;
     GameObject defender;
 
+    public GameObject GameoverUI;
+    public TextMeshProUGUI WinnerTeam;
+    public TextMeshProUGUI Result;
+
     void Update()
     {
+        GameTimeLeft();
         AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
 
@@ -40,9 +48,8 @@ public class Timer : MonoBehaviour
                     //Screen.sleepTimeout = SleepTimeout.NeverSleep;
                 }
             }
-
         }
-        Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
+        //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
         if (inAction)
         {
             if (AttackAnim.value <= rightBorderLimit)
@@ -62,6 +69,21 @@ public class Timer : MonoBehaviour
         //    teamascore.text = teamascorevalue.tostring();
         //}
     }
+    public void GameTimeLeft()
+    {
+        if (gameTime)
+        {
+            gameTimeLeft = (gameTimeLeft - Time.deltaTime);
+            UpdateLevelTimer(gameTimeLeft);
+            if (gameTimeLeft <= 0.0f)
+            {
+                //Gameover go = new Gameover();
+                GameOver();
+                gameTime = false;
+            }
+        }
+    }
+
     public void UpdateLevelTimer(float totalSeconds)
     {
         int minutes = Mathf.FloorToInt(totalSeconds / 60f);
@@ -81,12 +103,34 @@ public class Timer : MonoBehaviour
         int score = 0 ;
         for (int j = 0; j < defenders.Length; j++)
         {
-            if(defenders[j].GetComponent<AIController>().isAlive)
+            if(!defenders[j].GetComponent<AIController>().isAlive)
             {
                 defenders[j].gameObject.active = false;
                 score++;
             }
         }
         return score;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER");
+        //Timer t = new Timer();
+        GameoverUI.SetActive(true);
+        Time.timeScale = 1f;
+        if (TeamAScoreValue > TeamBScoreValue)
+        {
+            WinnerTeam.text = "TeamA";
+            Result.text = "CONGRATULATIONS";
+        }
+        else if (TeamAScoreValue < TeamBScoreValue)
+        {
+            WinnerTeam.text = "TeamB";
+            Result.text = "CONGRATULATIONS";
+        }
+        else
+        {
+            Result.text = "MATCH TIED";
+        }
     }
 }

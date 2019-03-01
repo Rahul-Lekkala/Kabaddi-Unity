@@ -8,6 +8,8 @@ public class AIController : MonoBehaviour
     public GameObject[] characters;
     GameObject player;
     int characterIndex;
+    CharacterController controller;
+    Vector3 moveDir = Vector3.zero;
 
     private Animator anim;
 
@@ -16,6 +18,7 @@ public class AIController : MonoBehaviour
     public float alertDistance;
     public float speed;
     public float attackAngle;
+    public static List<Vector3> startPositionList;
 
     public NavMeshAgent agent;
 
@@ -28,17 +31,52 @@ public class AIController : MonoBehaviour
     public bool attacked = false;
     public bool isAlive;
     // Start is called before the first frame update
+
+    public Vector3 startPosition;
+    // Start is called before the first frame update
+
+    void Awake()
+    {
+        startPosition = transform.position;
+        startPositionList.Add(startPosition);
+        Debug.Log("The starting position of the players" + startPosition);
+    }
+
+    void ChangePosition()
+    {
+        if (Input.GetKey(KeyCode.K))
+        {
+            transform.position = startPosition;
+            Debug.Log(transform.position);
+            Debug.Log("K Key Pressed . . . ");
+
+            moveDir = transform.position;
+            moveDir = moveDir * speed;
+            moveDir = transform.TransformDirection(moveDir);
+            controller.Move(moveDir * Time.deltaTime);
+
+            foreach (var playerPosition in startPositionList)
+            {
+                transform.position = playerPosition;// LosePosition.transform.position;
+                Debug.Log("After 30 Seconds" + playerPosition);
+            }
+        }
+    }
+
     void Start()
     {
+        //startPosition = transform.position;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
         isAlive = true;
+        startPositionList = new List<Vector3>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //ChangePosition();
         SwitchCharacter sc = new SwitchCharacter();
         int i = sc.character();
         player = characters[i];

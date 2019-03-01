@@ -19,6 +19,7 @@ public class AttackAnim : MonoBehaviour
     //TODO:: If player crosses the line, disable SwitchCharacter
 
     Vector3 moveDir = Vector3.zero;
+    Vector3 startPosition;
 
     CharacterController controller;
     Animator anim;
@@ -31,6 +32,7 @@ public class AttackAnim : MonoBehaviour
 
     void Start()
     {
+        //startPosition = transform.position;
         controller = GetComponent<CharacterController>();
         anim = GetComponent<Animator>();
         aIController = new AIController();
@@ -39,8 +41,35 @@ public class AttackAnim : MonoBehaviour
         isDead = false;
     }
 
+    void Awake()
+    {
+        startPosition = transform.position;
+        Debug.Log("The starting position of the players" + startPosition);
+    }
+
+    void ChangePosition()
+    {
+        if (Input.GetKey(KeyCode.K))
+        {
+            // transform.position = startPosition;
+            Debug.Log("K pressed" +controller.transform.position);
+            //controller.Move(startPosition);
+            controller.enabled = false;
+            controller.transform.position = new Vector3(startPosition.x,startPosition.y,startPosition.z);
+            controller.enabled = true;
+
+            //moveDir = transform.position;
+            //moveDir = moveDir * speed;
+            //moveDir = transform.TransformDirection(moveDir);
+
+            //moveDir.y -= gravity * Time.deltaTime;
+            //controller.Move(moveDir * Time.deltaTime);
+        }
+    }
+
     void Update()
     {
+        ChangePosition();
         CrossBorder();
         Movement();
         GetInput();

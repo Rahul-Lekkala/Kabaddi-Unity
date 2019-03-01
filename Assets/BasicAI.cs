@@ -26,8 +26,9 @@ public class BasicAI : MonoBehaviour
     public static bool won;
     public static int score;
     public static string playerName;
-    public string [] playersDied;
-    // Start is called before the first frame update
+    //public string [] playersDied;
+    
+
     void Start()
     {
         anim = GetComponent<Animator>();
@@ -82,8 +83,8 @@ public class BasicAI : MonoBehaviour
                         defenders[k].GetComponent<AIController>().Idle();
                         defenders[k].GetComponent<AIController>().StopAllCoroutines();
                         defenders[k].GetComponent<AIController>().enabled = false;
-                        playersDied[k] = defenders[k].name;
-                        Debug.Log("Players died is :" + playersDied[k]);
+                        //playersDied[k] = defenders[k].name;
+                        //Debug.Log("Players died is :" + playersDied[k]);
                     }
                     player.GetComponent<AttackAnim>().SetDead();
                     won = true;
