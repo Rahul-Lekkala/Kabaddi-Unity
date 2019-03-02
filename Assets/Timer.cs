@@ -3,48 +3,127 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public GameObject[] characters;
+    GameObject player;
+    public GameObject Opponent;
 
-    //private int timer = 30;
-    //public CharacterController player;
     public Text timerValue;
+    public float gameTimeLeft = 50.0f;
     public float timeLeft = 30;
     float rightBorderLimit = 2.4f;
+    public Text TeamAScore;
+    public Text TeamBScore;
+    public int TeamAScoreValue;
+    public int TeamBScoreValue;
+    bool flag = true;
+    bool inAction = false;
+    bool gameTime = true;
+    public GameObject[] defenders;
+    GameObject defender;
+    public GameObject GameoverUI;
+    public TextMeshProUGUI WinnerTeam;
+    public TextMeshProUGUI Result;
+    public Texture3D texture;
 
-    //public GameObject[] characters;
-    //GameObject currentCharacter;
-    //int characterIndex;
+    public Material[] material;
+    Renderer rend;
 
-    // Update is called once per frame
-    void Update()
+    private void Start()
     {
-        //SwitchCharacter sc = new SwitchCharacter();
-        //int i = sc.character();
-        //currentCharacter = characters[i];
-
-        //player = currentCharacter.GetComponent<CharacterController>();
-
-        //Debug.Log("*******" + playerController.value);
-        //Debug.Log("----------------" + playerController.value.z);
+        
+        //rend.enabled = true;
+        //rend.sharedMaterial = material[0];
+    }
+    void Update()
+    { 
+        GameTimeLeft();
         AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
-        //Debug.Log("AttackAnim.value"+ AttackAnim.value);
+
         if (AttackAnim.value >= rightBorderLimit)
         {
+            inAction = true;
             timeLeft = (timeLeft - Time.deltaTime);
-            //yield return new WaitForSeconds(1.0f);
-            timerValue.text = timeLeft.ToString();
+            timerValue.text = ((int)timeLeft).ToString();
             UpdateLevelTimer(timeLeft);
-            if (timeLeft <= 0.0f)
+            if (timeLeft <= 0.0f || BasicAI.won)
             {
-                //Debug.Log("Danger Zone :");
-                Screen.sleepTimeout = SleepTimeout.NeverSleep;
+                if (flag)
+                {
+                    TeamAScoreValue += 1;
+                    TeamAScore.text = TeamAScoreValue.ToString();
+                    flag = false;
+                    //Screen.sleepTimeout = SleepTimeout.NeverSleep;
+                }
+                //SwitchTeam();
             }
+            
+        }
+        //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
+        if (inAction)
+        {
+            if (AttackAnim.value <= rightBorderLimit)
+            {
+                //BasicAI bi = new BasicAI();
+                //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
+                int score = KillDefenders();
+                TeamBScoreValue += score;
+                TeamBScore.text = TeamBScoreValue.ToString();
+                inAction = false;
+                SwitchTeam();
+            }
+        }
+        //if (basicai.won)
+        //{
+        //    teamascorevalue += 1;
+        //    teamascore.text = teamascorevalue.tostring();
+        //}
+    }
+    public void SwitchTeam()
+    {
+        for (int j = 0; j < defenders.Length; j++)
+        {
+            Opponent.GetComponent<BasicAI>().enabled = false;
+            defenders[j].GetComponent<AIController>().enabled = false;
 
+            defenders[j].GetComponent<AttackAnim>().enabled = true;
+        }
+        AIController ai = new AIController();
+        ai.ChangePosition();
+
+        SwitchCharacter sc = new SwitchCharacter();
+        int i = sc.character();
+        player = characters[i];
+        Debug.Log("The player is :" + player.name);
+        AttackAnim an = new AttackAnim();
+        an.ChangePosition();
+        player.GetComponent<AttackAnim>().enabled = false;
+        player.GetComponent<AIController>().enabled = true;
+        
+        //GameObject varGameObject = GameObject.Find("object"); 
+        //GameObject varGameObject = GameObject.FindWithTag("Player"); 
+        //varGameObject.GetComponent<scriptname>().enabled = true;
+    }
+    public void GameTimeLeft()
+    {
+        if (gameTime)
+        {
+            gameTimeLeft = (gameTimeLeft - Time.deltaTime);
+            UpdateLevelTimer(gameTimeLeft);
+            if (gameTimeLeft <= 0.0f)
+            {
+                //Gameover go = new Gameover();
+                GameOver();
+                gameTime = false;
+            }
         }
     }
+
     public void UpdateLevelTimer(float totalSeconds)
     {
         int minutes = Mathf.FloorToInt(totalSeconds / 60f);
@@ -56,6 +135,42 @@ public class Timer : MonoBehaviour
         {
             seconds = 0;
             minutes += 1;
+        }
+    }
+
+    int KillDefenders()
+    {
+        int score = 0 ;
+        for (int j = 0; j < defenders.Length; j++)
+        {
+            if(!defenders[j].GetComponent<AIController>().isAlive)
+            {
+                defenders[j].gameObject.active = false;
+                score++;
+            }
+        }
+        return score;
+    }
+
+    public void GameOver()
+    {
+        Debug.Log("GAME OVER");
+        //Timer t = new Timer();
+        GameoverUI.SetActive(true);
+        Time.timeScale = 1f;
+        if (TeamAScoreValue > TeamBScoreValue)
+        {
+            WinnerTeam.text = "TeamA";
+            Result.text = "CONGRATULATIONS";
+        }
+        else if (TeamAScoreValue < TeamBScoreValue)
+        {
+            WinnerTeam.text = "TeamB";
+            Result.text = "CONGRATULATIONS";
+        }
+        else
+        {
+            Result.text = "MATCH TIED";
         }
     }
 }

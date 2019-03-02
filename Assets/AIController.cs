@@ -8,6 +8,8 @@ public class AIController : MonoBehaviour
     public GameObject[] characters;
     GameObject player;
     int characterIndex;
+    CharacterController controller;
+    Vector3 moveDir = Vector3.zero;
 
     private Animator anim;
 
@@ -16,6 +18,7 @@ public class AIController : MonoBehaviour
     public float alertDistance;
     public float speed;
     public float attackAngle;
+    public static List<Vector3> startPositionList;
 
     public NavMeshAgent agent;
 
@@ -26,17 +29,41 @@ public class AIController : MonoBehaviour
     public int minTime;
 
     public bool attacked = false;
+    public bool isAlive;
     // Start is called before the first frame update
+
+    public Vector3 startPosition;
+    // Start is called before the first frame update
+
+    void Awake()
+    {
+        startPosition = transform.position;
+        
+        Debug.Log("The starting position of the players" + startPosition);
+    }
+
+    public void ChangePosition()
+    {
+        controller.enabled = false;
+        controller.transform.position = new Vector3(startPosition.x, startPosition.y, startPosition.z);
+        controller.enabled = true;
+
+    }
+
     void Start()
     {
+        //startPosition = transform.position;
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
         agent.enabled = false;
+        isAlive = true;
+        startPositionList = new List<Vector3>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        //ChangePosition();
         SwitchCharacter sc = new SwitchCharacter();
         int i = sc.character();
         player = characters[i];
@@ -267,6 +294,9 @@ public class AIController : MonoBehaviour
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position,alertDistance);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, walkingDistance);
     }
 
     void FaceTarget()
