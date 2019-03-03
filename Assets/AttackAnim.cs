@@ -99,7 +99,7 @@ public class AttackAnim : MonoBehaviour
         //SwitchCharacter sc = new SwitchCharacter();
         //sc.Lose();
 
-        Opponent.GetComponent<BasicAI>().enabled = false; 
+        //Opponent.GetComponent<BasicAI>().enabled = false; 
         agent.enabled = true;
         agent.SetDestination(LosePosition.transform.position);
         if (Vector3.Distance(transform.position, LosePosition.transform.position) <= 1.7f)

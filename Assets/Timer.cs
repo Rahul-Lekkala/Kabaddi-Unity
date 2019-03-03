@@ -8,6 +8,7 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
+    public GameObject[] teams;
     public GameObject[] characters;
     GameObject player;
     public GameObject Opponent;
@@ -32,10 +33,11 @@ public class Timer : MonoBehaviour
 
     public Material[] material;
     Renderer rend;
+    static int team;
 
     private void Start()
     {
-        
+        team = 0;
         //rend.enabled = true;
         //rend.sharedMaterial = material[0];
     }
@@ -75,6 +77,14 @@ public class Timer : MonoBehaviour
                 TeamBScoreValue += score;
                 TeamBScore.text = TeamBScoreValue.ToString();
                 inAction = false;
+                if(team==0)
+                {
+                    team = 1;
+                }
+                else
+                {
+                    team = 0;
+                }
                 SwitchTeam();
             }
         }
@@ -86,29 +96,16 @@ public class Timer : MonoBehaviour
     }
     public void SwitchTeam()
     {
-        for (int j = 0; j < defenders.Length; j++)
+        //teams[0].gameObject.active = false;
+        for (int j = 0; j < teams.Length; j++)
         {
-            Opponent.GetComponent<BasicAI>().enabled = false;
-            defenders[j].GetComponent<AIController>().enabled = false;
-
-            defenders[j].GetComponent<AttackAnim>().enabled = true;
+            //if(teams[j].gameObject.active)
+            //{
+                teams[j].gameObject.active = !teams[j].gameObject.active;
+            //}
         }
-        AIController ai = new AIController();
-        ai.ChangePosition();
-
-        SwitchCharacter sc = new SwitchCharacter();
-        int i = sc.character();
-        player = characters[i];
-        Debug.Log("The player is :" + player.name);
-        AttackAnim an = new AttackAnim();
-        an.ChangePosition();
-        player.GetComponent<AttackAnim>().enabled = false;
-        player.GetComponent<AIController>().enabled = true;
-        
-        //GameObject varGameObject = GameObject.Find("object"); 
-        //GameObject varGameObject = GameObject.FindWithTag("Player"); 
-        //varGameObject.GetComponent<scriptname>().enabled = true;
     }
+
     public void GameTimeLeft()
     {
         if (gameTime)
@@ -172,5 +169,10 @@ public class Timer : MonoBehaviour
         {
             Result.text = "MATCH TIED";
         }
+    }
+
+    public int Team()
+    {
+        return team;
     }
 }
