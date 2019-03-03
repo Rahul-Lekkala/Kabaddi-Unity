@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -639,13 +639,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 51246386}
-  m_LocalRotation: {x: -0.11802758, y: 0.09131812, z: -0.010900802, w: -0.9887425}
-  m_LocalPosition: {x: -0.5, y: 4.994947, z: -7.75}
+  m_LocalRotation: {x: -0.1164532, y: 0.09331757, z: 0.0059617255, w: -0.9887846}
+  m_LocalPosition: {x: 1.3428266, y: 3.3599975, z: -10.817587}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 4.767, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 13.249001, y: -11.012, z: -1.9740001}
 --- !u!114 &51246390
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -665,7 +665,7 @@ MonoBehaviour:
   - {fileID: 454403351}
   - {fileID: 2135347089}
   - {fileID: 1631950880}
-  offset: {x: 1.11, y: 0, z: 0}
+  offset: {x: 1.45, y: 2.84, z: -5.93}
 --- !u!114 &51246391
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5205,10 +5205,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 685616070d298a64fb3974cb37c95041, type: 2}
     - target: {fileID: 400150, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -6.83
@@ -5217,6 +5213,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -2.02
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 685616070d298a64fb3974cb37c95041, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fec7eedca7c7fdd4798192f749643c0b, type: 3}
 --- !u!1001 &627454409
@@ -5713,7 +5713,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 0.8584906, g: 0.75725347, b: 0.7695934, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -9065,6 +9065,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CheerLeader2 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 400002, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.89
+      objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.7
@@ -9113,10 +9117,6 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: c62ec3e473adf074786d4e227576c555, type: 2}
-    - target: {fileID: 400002, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.89
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7cd6d00db798db54eafde664eb250970, type: 3}
 --- !u!4 &1178394223 stripped
@@ -9471,7 +9471,7 @@ MonoBehaviour:
   - {fileID: 1631950880}
   Opponent: {fileID: 829590398}
   timerValue: {fileID: 427781825}
-  gameTimeLeft: 50
+  gameTimeLeft: 180
   timeLeft: 30
   TeamAScore: {fileID: 1614211429}
   TeamBScore: {fileID: 1338143780}
