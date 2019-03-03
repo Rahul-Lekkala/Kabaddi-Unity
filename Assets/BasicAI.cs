@@ -35,7 +35,7 @@ public class BasicAI : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        won = false;
+        //won = false;
         //agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         //agent.enabled = false;
     }

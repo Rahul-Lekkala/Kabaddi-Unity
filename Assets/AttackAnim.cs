@@ -13,7 +13,7 @@ public class AttackAnim : MonoBehaviour
     float rot = 0f;
     float gravity = 8;
     static bool isDead;
-    public static float value;
+    static float value;
     public float distance;
 
     //TODO:: If player crosses the line, disable SwitchCharacter
@@ -30,6 +30,10 @@ public class AttackAnim : MonoBehaviour
 
     public GameObject Opponent;
 
+    public float Value()
+    {
+        return value;
+    }
     void Start()
     {
         //startPosition = transform.position;
@@ -91,7 +95,7 @@ public class AttackAnim : MonoBehaviour
         //bi.Won();
         Debug.Log("Dead...");
         agent.enabled = true;
-        agent.SetDestination(LosePosition.transform.position);
+        //agent.SetDestination(LosePosition.transform.position);
         anim.SetBool("isLost",true);
         anim.SetBool("AttackedMove", false);
         anim.SetBool("AttackedIdle", false);

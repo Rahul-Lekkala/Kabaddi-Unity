@@ -2817,6 +2817,7 @@ GameObject:
   - component: {fileID: 256555016}
   - component: {fileID: 256555017}
   - component: {fileID: 256555018}
+  - component: {fileID: 256555019}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2898,8 +2899,8 @@ MonoBehaviour:
   - {fileID: 893845461}
   - {fileID: 1749626331}
   - {fileID: 1947868494}
+  - {fileID: 508271701}
   - {fileID: 1074931802}
-  - {fileID: 0}
   defendersB:
   - {fileID: 240133368}
   - {fileID: 1158588839}
@@ -2916,6 +2917,64 @@ MonoBehaviour:
   remainingDistance: 0
   maxTime: 0
   minTime: 0
+--- !u!114 &256555019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256555015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b94192d008c90c4aa3e3d331273b328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  teams:
+  - {fileID: 829590398}
+  - {fileID: 1213169808}
+  - {fileID: 1077605345}
+  - {fileID: 780140085}
+  characters:
+  - {fileID: 135840627}
+  - {fileID: 1150374502}
+  - {fileID: 1106129013}
+  - {fileID: 454403351}
+  - {fileID: 2135347089}
+  - {fileID: 1631950880}
+  charactersB:
+  - {fileID: 794921272}
+  - {fileID: 893845461}
+  - {fileID: 1749626331}
+  - {fileID: 1947868494}
+  - {fileID: 508271701}
+  - {fileID: 1074931802}
+  defenders:
+  - {fileID: 1913148336}
+  - {fileID: 127200502}
+  - {fileID: 25288608}
+  - {fileID: 1055533659}
+  - {fileID: 1440117003}
+  - {fileID: 487014881}
+  defendersB:
+  - {fileID: 240133368}
+  - {fileID: 1158588839}
+  - {fileID: 1287773969}
+  - {fileID: 1877394017}
+  - {fileID: 81006954}
+  - {fileID: 1159094410}
+  Opponent: {fileID: 829590398}
+  timerValue: {fileID: 427781825}
+  gameTimeLeft: 180
+  timeLeft: 30
+  TeamAScore: {fileID: 1614211429}
+  TeamBScore: {fileID: 1338143780}
+  TeamAScoreValue: 0
+  TeamBScoreValue: 0
+  GameoverUI: {fileID: 1071119634}
+  WinnerTeam: {fileID: 375725860}
+  Result: {fileID: 288126426}
+  texture: {fileID: 0}
+  material: []
 --- !u!1001 &258845511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6737,8 +6796,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 780140088}
-  - component: {fileID: 780140087}
-  - component: {fileID: 780140086}
   m_Layer: 0
   m_Name: Pakistan (1)
   m_TagString: Untagged
@@ -6746,80 +6803,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &780140086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780140085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed50040535c8dc4d81d119d2217dd93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters: []
-  defenders:
-  - {fileID: 240133368}
-  - {fileID: 1158588839}
-  - {fileID: 1287773969}
-  - {fileID: 1877394017}
-  - {fileID: 81006954}
-  - {fileID: 1159094410}
-  charactersB: []
-  defendersB: []
-  attackingDistance: 5.51
-  distance: 1.6
-  alertDistance: 0
-  speed: 0
-  attackAngle: 0
-  WayPoints:
-  - {fileID: 1950880133}
-  - {fileID: 355373817}
-  - {fileID: 326233888}
-  remainingDistance: 0
-  maxTime: 0
-  minTime: 0
---- !u!114 &780140087
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 780140085}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b94192d008c90c4aa3e3d331273b328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teams: []
-  characters:
-  - {fileID: 240133368}
-  - {fileID: 1158588839}
-  - {fileID: 1287773969}
-  - {fileID: 1877394017}
-  - {fileID: 81006954}
-  - {fileID: 1159094410}
-  Opponent: {fileID: 829590398}
-  timerValue: {fileID: 427781825}
-  gameTimeLeft: 180
-  timeLeft: 30
-  TeamAScore: {fileID: 1614211429}
-  TeamBScore: {fileID: 1338143780}
-  TeamAScoreValue: 0
-  TeamBScoreValue: 0
-  defenders:
-  - {fileID: 1913148336}
-  - {fileID: 127200502}
-  - {fileID: 25288608}
-  - {fileID: 1055533659}
-  - {fileID: 1440117003}
-  - {fileID: 487014881}
-  GameoverUI: {fileID: 1071119634}
-  WinnerTeam: {fileID: 375725860}
-  Result: {fileID: 288126426}
-  texture: {fileID: 0}
-  material: []
 --- !u!4 &780140088
 Transform:
   m_ObjectHideFlags: 0
@@ -7309,7 +7292,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 829590399}
-  - component: {fileID: 829590400}
   m_Layer: 0
   m_Name: India
   m_TagString: Untagged
@@ -7337,43 +7319,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &829590400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829590398}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed50040535c8dc4d81d119d2217dd93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters:
-  - {fileID: 135840627}
-  - {fileID: 1150374502}
-  - {fileID: 1106129013}
-  - {fileID: 454403351}
-  - {fileID: 2135347089}
-  - {fileID: 1631950880}
-  defenders:
-  - {fileID: 1913148336}
-  - {fileID: 127200502}
-  - {fileID: 25288608}
-  - {fileID: 1055533659}
-  - {fileID: 1440117003}
-  - {fileID: 487014881}
-  charactersB: []
-  defendersB: []
-  attackingDistance: 5.51
-  distance: 1.6
-  alertDistance: 0
-  speed: 0
-  attackAngle: 0
-  WayPoints: []
-  remainingDistance: 0
-  maxTime: 0
-  minTime: 0
 --- !u!1 &836793289
 GameObject:
   m_ObjectHideFlags: 0
@@ -9468,7 +9413,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1077605347}
-  - component: {fileID: 1077605346}
   m_Layer: 0
   m_Name: India (1)
   m_TagString: Untagged
@@ -9476,43 +9420,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1077605346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1077605345}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed50040535c8dc4d81d119d2217dd93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters:
-  - {fileID: 135840627}
-  - {fileID: 1150374502}
-  - {fileID: 1106129013}
-  - {fileID: 454403351}
-  - {fileID: 2135347089}
-  - {fileID: 1631950880}
-  defenders:
-  - {fileID: 794921272}
-  - {fileID: 893845461}
-  - {fileID: 1749626331}
-  - {fileID: 1947868494}
-  - {fileID: 508271701}
-  - {fileID: 1074931802}
-  charactersB: []
-  defendersB: []
-  attackingDistance: 5.51
-  distance: 1.6
-  alertDistance: 0
-  speed: 0
-  attackAngle: 0
-  WayPoints: []
-  remainingDistance: 0
-  maxTime: 0
-  minTime: 0
 --- !u!4 &1077605347
 Transform:
   m_ObjectHideFlags: 0
@@ -11125,8 +11032,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1213169809}
-  - component: {fileID: 1213169810}
-  - component: {fileID: 1213169811}
   m_Layer: 0
   m_Name: Pakistan
   m_TagString: Untagged
@@ -11154,90 +11059,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1213169810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213169808}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b94192d008c90c4aa3e3d331273b328, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  teams:
-  - {fileID: 829590398}
-  - {fileID: 1213169808}
-  - {fileID: 1077605345}
-  - {fileID: 780140085}
-  characters:
-  - {fileID: 135840627}
-  - {fileID: 1150374502}
-  - {fileID: 1106129013}
-  - {fileID: 454403351}
-  - {fileID: 2135347089}
-  - {fileID: 1631950880}
-  Opponent: {fileID: 829590398}
-  timerValue: {fileID: 427781825}
-  gameTimeLeft: 180
-  timeLeft: 30
-  TeamAScore: {fileID: 1614211429}
-  TeamBScore: {fileID: 1338143780}
-  TeamAScoreValue: 0
-  TeamBScoreValue: 0
-  defenders:
-  - {fileID: 1913148336}
-  - {fileID: 127200502}
-  - {fileID: 25288608}
-  - {fileID: 1055533659}
-  - {fileID: 1440117003}
-  - {fileID: 487014881}
-  GameoverUI: {fileID: 1071119634}
-  WinnerTeam: {fileID: 375725860}
-  Result: {fileID: 288126426}
-  texture: {fileID: 0}
-  material: []
---- !u!114 &1213169811
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1213169808}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ed50040535c8dc4d81d119d2217dd93, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters:
-  - {fileID: 794921272}
-  - {fileID: 893845461}
-  - {fileID: 1749626331}
-  - {fileID: 1947868494}
-  - {fileID: 508271701}
-  - {fileID: 1074931802}
-  defenders:
-  - {fileID: 135840627}
-  - {fileID: 1150374502}
-  - {fileID: 1106129013}
-  - {fileID: 454403351}
-  - {fileID: 2135347089}
-  - {fileID: 1631950880}
-  charactersB: []
-  defendersB: []
-  attackingDistance: 5.51
-  distance: 1.6
-  alertDistance: 0
-  speed: 0
-  attackAngle: 0
-  WayPoints:
-  - {fileID: 1950880133}
-  - {fileID: 355373817}
-  - {fileID: 326233888}
-  remainingDistance: 0
-  maxTime: 0
-  minTime: 0
 --- !u!1 &1215523044
 GameObject:
   m_ObjectHideFlags: 0
@@ -15263,6 +15084,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teams: []
   characters: []
+  charactersB: []
+  defenders: []
+  defendersB: []
   Opponent: {fileID: 0}
   timerValue: {fileID: 0}
   gameTimeLeft: 50
@@ -15271,7 +15095,6 @@ MonoBehaviour:
   TeamBScore: {fileID: 0}
   TeamAScoreValue: 0
   TeamBScoreValue: 0
-  defenders: []
   GameoverUI: {fileID: 1071119634}
   WinnerTeam: {fileID: 375725860}
   Result: {fileID: 288126426}

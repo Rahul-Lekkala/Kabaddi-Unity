@@ -10,6 +10,10 @@ public class Timer : MonoBehaviour
 {
     public GameObject[] teams;
     public GameObject[] characters;
+    public GameObject[] charactersB;
+    public GameObject[] defenders;
+    public GameObject[] defendersB;
+
     GameObject player;
     public GameObject Opponent;
 
@@ -24,7 +28,7 @@ public class Timer : MonoBehaviour
     bool flag = true;
     bool inAction = false;
     bool gameTime = true;
-    public GameObject[] defenders;
+    
     GameObject defender;
     public GameObject GameoverUI;
     public TextMeshProUGUI WinnerTeam;
@@ -44,10 +48,27 @@ public class Timer : MonoBehaviour
     void Update()
     { 
         GameTimeLeft();
-        AttackAnim attackAnim = new AttackAnim();
+
+        SwitchCharacter sc = new SwitchCharacter();
+        GameObject player;
+        float limit = 0f ;
+        if (team == 0)
+        {
+            int i = sc.character();
+            player = characters[i];
+            limit = player.GetComponent<AttackAnim>().Value();
+        }
+        else if (team == 1)
+        {
+            int i = sc.defender();
+            player = charactersB[i];
+            limit = player.GetComponent<AttackAnim>().Value();
+        }
+
+        //AttackAnim attackAnim = new AttackAnim();
         timerValue.text = timeLeft.ToString();
 
-        if (AttackAnim.value >= rightBorderLimit)
+        if (limit >= rightBorderLimit)
         {
             inAction = true;
             timeLeft = (timeLeft - Time.deltaTime);
@@ -57,10 +78,17 @@ public class Timer : MonoBehaviour
             {
                 if (flag)
                 {
-                    TeamAScoreValue += 1;
-                    TeamAScore.text = TeamAScoreValue.ToString();
+                    if (team == 0)
+                    {
+                        TeamAScoreValue += 1;
+                        TeamAScore.text = TeamAScoreValue.ToString();
+                    }
+                    else if(team == 1)
+                    {
+                        TeamBScoreValue += 1;
+                        TeamBScore.text = TeamBScoreValue.ToString();
+                    }
                     flag = false;
-                    //Screen.sleepTimeout = SleepTimeout.NeverSleep;
                 }
                 //SwitchTeam();
             }
@@ -69,14 +97,24 @@ public class Timer : MonoBehaviour
         //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
         if (inAction)
         {
-            if (AttackAnim.value <= rightBorderLimit)
+            if (limit <= rightBorderLimit)
             {
                 //BasicAI bi = new BasicAI();
                 //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
-                int score = KillDefenders();
-                TeamBScoreValue += score;
-                TeamBScore.text = TeamBScoreValue.ToString();
-                inAction = false;
+                
+                if (team == 0)
+                {
+                    int score = KillDefenders();
+                    TeamBScoreValue += score;
+                    TeamBScore.text = TeamBScoreValue.ToString();
+                }
+                else if (team == 1)
+                {
+                    int score = KillDefendersB();
+                    TeamAScoreValue += score;
+                    TeamAScore.text = TeamAScoreValue.ToString();
+                }
+                    inAction = false;
                 if(team==0)
                 {
                     team = 1;
@@ -96,6 +134,7 @@ public class Timer : MonoBehaviour
     }
     public void SwitchTeam()
     {
+        BasicAI.won = false;
         //teams[0].gameObject.active = false;
         for (int j = 0; j < teams.Length; j++)
         {
@@ -143,9 +182,49 @@ public class Timer : MonoBehaviour
             if(!defenders[j].GetComponent<AIController>().isAlive)
             {
                 defenders[j].gameObject.active = false;
+                charactersB[j].gameObject.active = false;
                 score++;
             }
         }
+
+        int peopleAlive = score;
+        for(int i=0;i<characters.Length;i++)
+        {
+            if((!defendersB[i].gameObject.active||!characters[i].gameObject.active) && peopleAlive > 0)
+            {
+                defendersB[i].gameObject.active = true;
+                characters[i].gameObject.active = true;
+                peopleAlive--;
+            }
+        }
+
+        return score;
+    }
+
+    int KillDefendersB()
+    {
+        int score = 0;
+        for (int j = 0; j < defendersB.Length; j++)
+        {
+            if (!defendersB[j].GetComponent<AIController>().isAlive)
+            {
+                defendersB[j].gameObject.active = false;
+                characters[j].gameObject.active = false;
+                score++;
+            }
+        }
+
+        int peopleAlive = score;
+        for (int i = 0; i < characters.Length; i++)
+        {
+            if ((!defenders[i].gameObject.active||!charactersB[i].gameObject.active) && peopleAlive>0)
+            {
+                defenders[i].gameObject.active = true;
+                charactersB[i].gameObject.active = true;
+                peopleAlive--;
+            }
+        }
+
         return score;
     }
 
