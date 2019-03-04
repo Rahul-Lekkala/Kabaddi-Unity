@@ -28,7 +28,9 @@ public class Timer : MonoBehaviour
     bool flag = true;
     bool inAction = false;
     bool gameTime = true;
-    
+    Vector3 playerStartPosition;
+    bool playerPicked = false;
+
     GameObject defender;
     public GameObject GameoverUI;
     public TextMeshProUGUI WinnerTeam;
@@ -46,23 +48,29 @@ public class Timer : MonoBehaviour
         //rend.sharedMaterial = material[0];
     }
     void Update()
-    { 
-        GameTimeLeft();
+    {
+        //GameTimeLeft();
 
         SwitchCharacter sc = new SwitchCharacter();
-        GameObject player;
-        float limit = 0f ;
+        GameObject player = null;
+        float limit = 0f;
         if (team == 0)
         {
             int i = sc.character();
             player = characters[i];
             limit = player.GetComponent<AttackAnim>().Value();
         }
-        else if (team == 1)
+        else
         {
             int i = sc.defender();
             player = charactersB[i];
             limit = player.GetComponent<AttackAnim>().Value();
+        }
+
+        if (!playerPicked)
+        {
+            playerPicked = true;
+            playerStartPosition = player.transform.position;
         }
 
         //AttackAnim attackAnim = new AttackAnim();
@@ -76,23 +84,21 @@ public class Timer : MonoBehaviour
             UpdateLevelTimer(timeLeft);
             if (timeLeft <= 0.0f || BasicAI.won)
             {
-                if (flag)
+                player.transform.position = playerStartPosition;
+                if (team == 0)
                 {
-                    if (team == 0)
-                    {
-                        TeamAScoreValue += 1;
-                        TeamAScore.text = TeamAScoreValue.ToString();
-                    }
-                    else if(team == 1)
-                    {
-                        TeamBScoreValue += 1;
-                        TeamBScore.text = TeamBScoreValue.ToString();
-                    }
-                    flag = false;
+                    TeamAScoreValue += 1;
+                    TeamAScore.text = TeamAScoreValue.ToString();
                 }
-                //SwitchTeam();
+                else if (team == 1)
+                {
+                    TeamBScoreValue += 1;
+                    TeamBScore.text = TeamBScoreValue.ToString();
+                }
+                inAction = false;
+                SwitchTeam();
             }
-            
+
         }
         //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
         if (inAction)
@@ -101,7 +107,7 @@ public class Timer : MonoBehaviour
             {
                 //BasicAI bi = new BasicAI();
                 //Debug.Log("numberOfPlayersAttacking = " + BasicAI.score);
-                
+
                 if (team == 0)
                 {
                     int score = KillDefenders();
@@ -114,15 +120,7 @@ public class Timer : MonoBehaviour
                     TeamAScoreValue += score;
                     TeamAScore.text = TeamAScoreValue.ToString();
                 }
-                    inAction = false;
-                if(team==0)
-                {
-                    team = 1;
-                }
-                else
-                {
-                    team = 0;
-                }
+                inAction = false;
                 SwitchTeam();
             }
         }
@@ -134,15 +132,27 @@ public class Timer : MonoBehaviour
     }
     public void SwitchTeam()
     {
+        playerPicked = false;
+        timeLeft = 30;
+        if (team == 0)
+        {
+            team = 1;
+        }
+        else
+        {
+            team = 0;
+        }
+
         BasicAI.won = false;
         //teams[0].gameObject.active = false;
         for (int j = 0; j < teams.Length; j++)
         {
             //if(teams[j].gameObject.active)
             //{
-                teams[j].gameObject.active = !teams[j].gameObject.active;
+            teams[j].gameObject.active = !teams[j].gameObject.active;
             //}
         }
+
     }
 
     public void GameTimeLeft()
@@ -176,10 +186,10 @@ public class Timer : MonoBehaviour
 
     int KillDefenders()
     {
-        int score = 0 ;
+        int score = 0;
         for (int j = 0; j < defenders.Length; j++)
         {
-            if(!defenders[j].GetComponent<AIController>().isAlive)
+            if (!defenders[j].GetComponent<AIController>().isAlive)
             {
                 defenders[j].gameObject.active = false;
                 charactersB[j].gameObject.active = false;
@@ -188,9 +198,9 @@ public class Timer : MonoBehaviour
         }
 
         int peopleAlive = score;
-        for(int i=0;i<characters.Length;i++)
+        for (int i = 0; i < characters.Length; i++)
         {
-            if((!defendersB[i].gameObject.active||!characters[i].gameObject.active) && peopleAlive > 0)
+            if ((!defendersB[i].gameObject.active || !characters[i].gameObject.active) && peopleAlive > 0)
             {
                 defendersB[i].gameObject.active = true;
                 characters[i].gameObject.active = true;
@@ -217,7 +227,7 @@ public class Timer : MonoBehaviour
         int peopleAlive = score;
         for (int i = 0; i < characters.Length; i++)
         {
-            if ((!defenders[i].gameObject.active||!charactersB[i].gameObject.active) && peopleAlive>0)
+            if ((!defenders[i].gameObject.active || !charactersB[i].gameObject.active) && peopleAlive > 0)
             {
                 defenders[i].gameObject.active = true;
                 charactersB[i].gameObject.active = true;

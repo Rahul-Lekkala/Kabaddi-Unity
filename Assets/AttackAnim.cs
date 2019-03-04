@@ -12,8 +12,8 @@ public class AttackAnim : MonoBehaviour
     float rotSpeed = 50;
     float rot = 0f;
     float gravity = 8;
-    static bool isDead;
-    static float value;
+    public bool isDead;
+    public float value;
     public float distance;
 
     //TODO:: If player crosses the line, disable SwitchCharacter
@@ -53,15 +53,15 @@ public class AttackAnim : MonoBehaviour
 
     public void ChangePosition()
     {
-            controller.enabled = false;
-            controller.transform.position = new Vector3(startPosition.x,startPosition.y,startPosition.z);
-            controller.enabled = true;
-        
+        controller.enabled = false;
+        controller.transform.position = new Vector3(startPosition.x, startPosition.y, startPosition.z);
+        controller.enabled = true;
+
     }
 
     void Update()
     {
-        
+
         CrossBorder();
         Movement();
         GetInput();
@@ -70,7 +70,7 @@ public class AttackAnim : MonoBehaviour
             Dead();
             //RemovingPlayers();
         }
-        
+
     }
 
     void RemovingPlayers()
@@ -96,7 +96,7 @@ public class AttackAnim : MonoBehaviour
         Debug.Log("Dead...");
         agent.enabled = true;
         //agent.SetDestination(LosePosition.transform.position);
-        anim.SetBool("isLost",true);
+        anim.SetBool("isLost", true);
         anim.SetBool("AttackedMove", false);
         anim.SetBool("AttackedIdle", false);
         anim.SetBool("isAttacked", true);
@@ -118,7 +118,7 @@ public class AttackAnim : MonoBehaviour
     void CrossBorder()
     {
         //Debug.Log(controller.transform.position.z);
-        if(controller.transform.position.z>=1.56f)
+        if (controller.transform.position.z >= 1.56f)
         {
             //Debug.Log("Border Crossed");
         }
@@ -131,7 +131,7 @@ public class AttackAnim : MonoBehaviour
     void Movement()
     {
         //agent.enabled = true;
-       // agent.SetDestination(LosePosition.transform.position);
+        // agent.SetDestination(LosePosition.transform.position);
         value = transform.position.z;
         //Debug.Log(transform.position);
         //Debug.Log("Movement called");
@@ -221,14 +221,14 @@ public class AttackAnim : MonoBehaviour
                 anim.SetBool("isWalkingBack", false);
                 anim.SetInteger("speed", 0);
                 moveDir = new Vector3(0, 0, 0);
-                if(BasicAI.attacked == true)
+                if (BasicAI.attacked == true)
                 {
                     anim.SetBool("AttackedMove", false);
                     anim.SetBool("AttackedIdle", true);
                     anim.SetInteger("speed", 1);
                 }
             }
-            if(BasicAI.attacked==true)
+            if (BasicAI.attacked == true)
             {
                 // Debug.Log("Attacked is working...");
                 if (anim.GetBool("isLost") == false)
@@ -238,7 +238,7 @@ public class AttackAnim : MonoBehaviour
             }
             if (BasicAI.attacked == false)
             {
-               // Debug.Log("... Not Attacking");
+                // Debug.Log("... Not Attacking");
                 //anim.SetInteger("speed", 0);
                 anim.SetBool("isAttacked", false);
                 anim.SetBool("AttackedIdle", false);
@@ -297,7 +297,7 @@ public class AttackAnim : MonoBehaviour
     IEnumerator AttackedRoutine()
     {
         anim.SetBool("isAttacked", true);
-        anim.SetBool("AttackedIdle",true);
+        anim.SetBool("AttackedIdle", true);
         anim.SetInteger("speed", 1);
         yield return new WaitForSeconds(2);
         anim.SetBool("AttackedIdle", false);
